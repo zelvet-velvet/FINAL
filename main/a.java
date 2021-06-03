@@ -20,24 +20,13 @@ class a{
 
 	
 
-	static String[][] brd=new String[5][5];
-	static {
-		for(int i=0;i<5;i++)
-		{
-			for(int j=0;j<5;j++)
-			{
-				brd[i][j]="  ■  ";
-			}
-		}
-	}
 	
 	//player's icon
 	static int color;
 	static String w=ANSI_YELLOW+"(‘ᾥ')"+ANSI_RESET;
 	static String ww=ANSI_YELLOW+"('ᾥ’)"+ANSI_RESET;
 
-	//player's position
-	static int p1=4, p2=2; 
+
 
 	//store player's move
 	static char move;
@@ -71,15 +60,10 @@ class a{
 	//a variable to control animation
 	static int anime=0;
 
-	static {
-			brd[2][0]=m1;
-			brd[2][4]=m2;
-			brd[0][2]=king;
-	}
+	
 
 
-
-	//  Main  //
+	// ↓ Main ↓ //
 
 
 	public static void main(String [] args){
@@ -104,186 +88,23 @@ class a{
 			System.out.println("╚════════════════════════════════════════════════╝");
 			System.out.println("");
 			menu=sb.nextInt();
+			//call the funtion of menu
 			menu();
 			if(menu==1)
 			{
 				break;
 			}
 		}
+		//to changing skin of character
 		brd[4][2]=w;
-		cls();
-		disply();
-		magicwand=ssb.nextLine();
-		while(true){
-			move=ssb.nextLine().charAt(0);
-			switch(move)
-			{
-				case 'w':
-					w();
-					disply();
-					break;
-				case 'a':
-					a();
-					disply();
-					break;
-				case 's':
-					s();
-					disply();
-					break;
-				case 'd':
-					d();
-					disply();
-					break;
-			}
-			if(p1==2&&p2==0)
-			{
-				bridge();
-				mn1();
-				mn1fightdisply();
-			}
-			else if(p1==0&&p2==2)
-			{
-			
-			}
-			else if(p1==2&&p2==4)
-			{
-			
-			}
-		}		
-		
-
-		
+		movement();
 	}
 
-	//  Main  //
-
-	// Fight! //
-
-//m1's fight
-	
-	static String fighttext="                       ";
-	static String Attack="【1. Attack 】";
-	static String Taunt="【3. Taunt  】";
-	static String Backpack="【2.Backpack】";
-	static String Escape="【4. Escape 】";
-
-	//variable to control:
-	
-	//attack speed
-	static int aspeed;
-	
-	public static void mn1fightdisply(){
-		//m1's attack speed is 3
-		mn1board();
-		fightstmt=sb.nextInt();
-		switch(fightstmt)
-		{
-			case 1:
-				Attack="【1.  Bite  】";
-				Taunt="【2. Murmur 】";
-				Backpack="            ";
-				Escape="            ";
-				fightstmt=sb.nextInt();
-				switch(fightstmt)
-				{
-					case 1:
-						Attack="            ";
-						Taunt="            ";
-						fighttext="  Bite!                ";
-						mn1board();
-						
-					case 2:
-						Attack="            ";
-						Taunt="            ";
-						fighttext="  Murmur!               ";
-						mn1board();
-					
-					
-				}
-				mn1board();
-			case 2:
-			
-			case 3:
-			
-			case 4:
-				
-		}		
-	}
-	public static void mn1board(){
-		cls();
-		System.out.println("\n");
-		System.out.println("    "+playershp+"      	     "+opponentshp);
-		System.out.println("                       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠶⢶⡄");
-		System.out.println("                  ⠀     ⢀⡤⠤⣤⠀⠀⠀⠀⠀⠀⠀⠀⣾⠀⠀⠀⢿");
-		System.out.println("                       ⢀⡟⠀⠀⠈⣧⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⢸ ");
-		System.out.println("                       ⠘⣇⠀⠀⢀⡟⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⡾");
-		System.out.println("                       ⠀⠙⠶⠶⠞⠁⠀⠀⠀⠀⠀⠀⠀⠈⠳⠶⠞ ");
-		System.out.println("       ♕           ⠀    ⠀⠀⠀⠀⠀⢠⣤⣤⣤⣤⣤⡄     ");
-		System.out.println("     "+ww+"        v.s                     ");
-		System.out.println("  ╔═══════════════════════════════════╗");
-		System.out.println("  ║ Fight begin! It's your turn now.  ║");
-		System.out.println("  ║				      ║");
-		System.out.println("  ║   "+Attack+"   "+Taunt+" ║");
-		System.out.println("  ║"+fighttext+"            ║");
-		System.out.println("  ║   "+Backpack+"   "+Escape+" ║");
-		System.out.println("  ╚═══════════════════════════════════╝");
-		System.out.println("\n");
-	}
+	//  ↑ Main ↑ //
 
 
-	// Fight! //
+	// ↓ Fuction of menu ↓ //
 
-	// Tools //
-
-	public static void w(){
-		if(p1>0)
-		{
-			brd[p1][p2]="  ■  ";
-			brd[p1-1][p2]=w;
-			p1=p1-1;
-		}
-		else
-		{
-			System.out.println("You can't leave this map!");
-		}
-	}
-	public static void a(){
-		if(p2>0)
-		{
-			brd[p1][p2]="  ■  ";
-			brd[p1][p2-1]=ww;
-			p2=p2-1;
-		}
-		else
-		{
-			System.out.println("You can't leave this map!");
-		}
-	}
-	public static void s(){
-		if(p1<4)
-		{
-			brd[p1][p2]="  ■  ";
-			brd[p1+1][p2]=w;
-			p1=p1+1;
-		}
-		else
-		{
-			System.out.println("You can't leave this map!");
-		}
-	}
-	public static void d(){
-		if(p2<4)
-		{
-			brd[p1][p2]="  ■  ";
-			brd[p1][p2+1]=ww;
-			p2=p2+1;
-		}
-		else
-		{
-			System.out.println("You can't leave this map!");
-		}
-	}
-		
 	//menu switch
 	public static void menu(){
 		switch(menu)
@@ -361,7 +182,39 @@ class a{
 				break;
 		}
 	}
-	//print out the map
+
+	// ↑ Fuction of menu ↑ //
+
+
+	// ↓ Board(map) Display and some Function inside ↓ //
+
+		//player's position
+
+	static int p1=4, p2=2; 
+	
+		//initialize a 5X5 2D Array
+
+	static String[][] brd=new String[5][5];
+
+		//set every elements as ■
+
+	static {
+		for(int i=0;i<5;i++)
+		{
+			for(int j=0;j<5;j++)
+			{
+				brd[i][j]="  ■  ";
+			}
+		}
+	}
+	
+	static {
+			brd[2][0]=m1;
+			brd[2][4]=m2;
+			brd[0][2]=king;
+	}
+
+		// ↓ print out the map ↓ //
 
 	static String maptext="                             Adventure Time!";
 	
@@ -398,6 +251,197 @@ class a{
 		System.out.println("");
 		System.out.println(maptext);
 	}
+		// ↑ print out the map ↑ //
+		
+		// ↓ Function to control movement ↓ //
+	public static void movement(){
+		cls();
+		disply();
+		while(true){
+			move=ssb.nextLine().charAt(0);
+			switch(move)
+			{
+				case 'w':
+					w();
+					disply();
+					break;
+				case 'a':
+					a();
+					disply();
+					break;
+				case 's':
+					s();
+					disply();
+					break;
+				case 'd':
+					d();
+					disply();
+					break;
+			}
+			fightbegin();
+		}	
+	}
+	public static void w(){
+		if(p1>0)
+		{
+			brd[p1][p2]="  ■  ";
+			brd[p1-1][p2]=w;
+			p1=p1-1;
+		}
+		else
+		{
+			System.out.println("You can't leave this map!");
+		}
+	}
+	public static void a(){
+		if(p2>0)
+		{
+			brd[p1][p2]="  ■  ";
+			brd[p1][p2-1]=ww;
+			p2=p2-1;
+		}
+		else
+		{
+			System.out.println("You can't leave this map!");
+		}
+	}
+	public static void s(){
+		if(p1<4)
+		{
+			brd[p1][p2]="  ■  ";
+			brd[p1+1][p2]=w;
+			p1=p1+1;
+		}
+		else
+		{
+			System.out.println("You can't leave this map!");
+		}
+	}
+	public static void d(){
+		if(p2<4)
+		{
+			brd[p1][p2]="  ■  ";
+			brd[p1][p2+1]=ww;
+			p2=p2+1;
+		}
+		else
+		{
+			System.out.println("You can't leave this map!");
+		}
+	}
+
+		// ↑ Function to control movement ↑ //
+
+		// ↓ The Fuction to triger the fight ↓ //
+	public static void fightbegin(){
+		if(p1==2&&p2==0)
+		{
+			bridge();
+			//m1();
+			mn1fightdisply();
+		}
+		else if(p1==0&&p2==2)
+		{
+			
+		}
+		else if(p1==2&&p2==4)
+		{
+			
+		}
+	}
+		// ↑ The Fuction to triger the fight ↑ //
+	
+	// ↑ Board(map) Display ↑ //
+
+
+
+
+	// ↓ Fight! ↓ //
+
+	//m1's fight
+	
+	static String fighttext="                      ";
+	static String Attack="【1. Attack 】";
+	static String Taunt="【3. Taunt  】";
+	static String Backpack="【2.Backpack】";
+	static String Escape="【4. Escape 】";
+
+	//variable to control:
+	
+	//attack speed
+	static int aspeed;
+	
+	public static void mn1fightdisply(){
+		//m1's attack speed is 3
+		mn1board();
+		fightstmt=sb.nextInt();
+		switch(fightstmt)
+		{
+			case 1:
+				Attack="【1.  Bite  】";
+				Taunt="【2. Murmur 】";
+				Backpack="              ";
+				Escape="              ";
+				cls();
+				mn1board();
+				fightstmt=sb.nextInt();
+				switch(fightstmt)
+				{
+					case 1:
+						Attack="              ";
+						Taunt="              ";
+						fighttext="  Bite!               ";
+						mn1board();
+						break;
+						
+					case 2:
+						Attack="              ";
+						Taunt="              ";
+						fighttext="  Murmur!             ";
+						mn1board();
+						break;
+					
+				}
+				mn1board();
+			case 2:
+			
+			case 3:
+			
+			case 4:
+				
+		}		
+	}
+	public static void mn1board(){
+		cls();
+		System.out.println("\n");
+		System.out.println("    "+playershp+"      	     "+opponentshp);
+		System.out.println("                       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠶⢶⡄");
+		System.out.println("                  ⠀     ⢀⡤⠤⣤⠀⠀⠀⠀⠀⠀⠀⠀⣾⠀⠀⠀⢿");
+		System.out.println("                       ⢀⡟⠀⠀⠈⣧⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⢸ ");
+		System.out.println("                       ⠘⣇⠀⠀⢀⡟⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⡾");
+		System.out.println("                       ⠀⠙⠶⠶⠞⠁⠀⠀⠀⠀⠀⠀⠀⠈⠳⠶⠞ ");
+		System.out.println("       ♕           ⠀    ⠀⠀⠀⠀⠀⢠⣤⣤⣤⣤⣤⡄     ");
+		System.out.println("     "+ww+"        v.s                     ");
+		System.out.println("  ╔═══════════════════════════════════╗");
+		System.out.println("  ║ Fight begin! It's your turn now.  ║");
+		System.out.println("  ║				      ║");
+		System.out.println("  ║   "+Attack+"   "+Taunt+" ║");
+		System.out.println("  ║"+fighttext+"             ║");
+		System.out.println("  ║   "+Backpack+"   "+Escape+" ║");
+		System.out.println("  ╚═══════════════════════════════════╝");
+		System.out.println("\n");
+	}
+
+
+	// ↑ Fight! ↑ //
+
+
+	// Tools //
+
+
+		
+
+
 
 
 	
